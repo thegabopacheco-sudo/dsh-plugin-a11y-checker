@@ -1,0 +1,16 @@
+# dsh-plugin-a11y-checker — capa bundle de DSH.
+# Inserta una fila @deepseek-ai/dsh-mcp-client que lanza el servidor como "a11y".
+# Tools resultantes: mcp__a11y__* (ver README).
+- insert:
+    - id: mcp-a11y-checker
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: a11y
+        transport: stdio
+        command: !!js process.execPath
+        args:
+          - !!js "(process.env.DSH_HOME && process.env.DSH_HOME.trim() !== '' ? process.env.DSH_HOME : (process.env.USERPROFILE || process.env.HOME || '') + '/.dsh') + '/plugins/a11y-checker/server.mjs'"
+        env:
+          ELECTRON_RUN_AS_NODE: '1'
+        failOnStartupError: false
+        toolCallTimeoutMs: 60000
